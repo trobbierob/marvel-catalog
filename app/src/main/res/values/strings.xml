@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Marvel Catalog</string>
+    <string name="search">Search</string>
+    <string name="error_message">Error message</string>
+    <string name="editText_text">Enter a word or phrase.</string>
+    <string name="json_server_error">Could not get json from server.</string>
+    <string name="check_connection">Check Internet Connection</string>
+    <string name="name">name</string>
+    <string name="test">description</string>
+    <string name="empty_tv">No Heroes</string>
 </resources>
