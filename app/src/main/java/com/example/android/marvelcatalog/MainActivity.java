@@ -15,7 +15,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -32,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private EditText mSearchEditText;
     private ProgressBar mLoadingIndicator;
-    private TextView mEmptyView;
-    private TextView mUrlTextView;
+    private View emptyView;
     public String jsonString;
     public URL marvelQueryUrl;
     private ListView listView;
@@ -43,13 +41,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mLoadingIndicator = (ProgressBar) findViewById(R.id.progress_bar);
         mSearchEditText = (EditText) findViewById(R.id.editText_query);
         comicList = new ArrayList<>();
-        mEmptyView = (TextView) findViewById(R.id.empty);
         listView = (ListView) findViewById(R.id.list);
-        mUrlTextView = (TextView) findViewById(R.id.url_textView);
+        emptyView = findViewById(R.id.empty_view);
+        listView.setEmptyView(emptyView);
     }
 
     @Override
@@ -80,16 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            mLoadingIndicator.setVisibility(View.VISIBLE);
             String characterQuery = mSearchEditText.getText().toString();
 
             if (characterQuery.equals(null) || characterQuery.equals("")) {
-                mEmptyView.setVisibility(View.VISIBLE);
                 listView.setVisibility(View.INVISIBLE);
 
             } else {
-                mEmptyView.setVisibility(View.INVISIBLE);
-                mUrlTextView.setVisibility(View.VISIBLE);
                 listView.setVisibility(View.VISIBLE);
                 marvelQueryUrl = NetworkUtils.marvelBuildURL(characterQuery);
             }
@@ -128,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            mLoadingIndicator.setVisibility(View.INVISIBLE);
+            //mLoadingIndicator.setVisibility(View.INVISIBLE);
             if (!comicList.equals(null)) {
                 Log.v(TAG, "comicList is: " + comicList);
                 ListAdapter adapter = new SimpleAdapter(MainActivity.this, comicList,
@@ -137,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.v(TAG, "listview is: " + listView);
                 listView.setAdapter(adapter);
             } else {
-                listView.setEmptyView(findViewById(R.id.empty));
+                listView.setEmptyView(emptyView);
             }
         }
     }
