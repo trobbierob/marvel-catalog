@@ -93,18 +93,16 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     jsonString = NetworkUtils.getResponseFromHttpUrl(marvelQueryUrl);
                     JSONObject jsonRootObject = new JSONObject(jsonString);
-                    Log.v(TAG, "JSONObject is: " + jsonRootObject);
                     JSONObject jsonDataObject = jsonRootObject.optJSONObject("data");
-                    Log.v(TAG, "JSONObject Data is: " + jsonDataObject);
                     JSONArray jsonResultsArray = jsonDataObject.optJSONArray("results");
-                    Log.v(TAG, "JSONArray Results is: " + jsonResultsArray);
-                    JSONObject jsonFirstResult = jsonResultsArray.getJSONObject(0);
-                    String name = jsonFirstResult.getString("name");
-                    Log.v(TAG, "name is: " + name);
 
-                    HashMap<String, String> character = new HashMap<>();
-                    character.put(getString(R.string.name), name);
-                    comicList.add(character);
+                    for (int i = 0; i < jsonResultsArray.length(); i++) {
+                        JSONObject jsonFirstResult = jsonResultsArray.getJSONObject(i);
+                        String name = jsonFirstResult.getString("name");
+                        HashMap<String, String> character = new HashMap<>();
+                        character.put(getString(R.string.name), name);
+                        comicList.add(character);
+                    }
 
                 } catch (IOException e) {
                     Log.e(TAG, "IOException at " + e);
