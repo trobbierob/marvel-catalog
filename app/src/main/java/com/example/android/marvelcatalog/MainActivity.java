@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
     public URL marvelQueryUrl;
     private ListView listView;
     private ArrayList<HashMap<String, String>> comicList;
+    private RecyclerView mRecyclerView;
+    //private MarvelAdapter mMarvelAdapter;
+    private Toast mToast;
+    private View mErrorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             if (!comicList.equals(null)) {
                 Log.v(TAG, "comicList is: " + comicList);
                 ListAdapter adapter = new SimpleAdapter(MainActivity.this, comicList,
-                        R.layout.list_item, new String[]{getString(R.string.name)},
+                        R.layout.character_list_item, new String[]{getString(R.string.name)},
                         new int[]{R.id.name});
                 Log.v(TAG, "listview is: " + listView);
                 listView.setAdapter(adapter);
