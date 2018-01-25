@@ -1,7 +1,9 @@
-package com.example.android.marvelcatalog;
+package com.example.android.marvelcatalog.utilities;
 
 import android.net.Uri;
 import android.util.Log;
+
+import com.example.android.marvelcatalog.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,20 +12,24 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
-public class NetworkUtils {
+public final class NetworkUtils extends android.app.Application {
+
+
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    final static String MARVEL_COMICS_URL =
+    private static final String MARVEL_COMICS_URL =
             "https://gateway.marvel.com/v1/public/characters";
+
     final static String MARVEL_PARAM_QUERY = "nameStartsWith";
     final static String MARVEL_PARAM_LIMIT = "limit";
-    final static String MARVEL_RESULT_LIMIT_NUM = "10";
+    final static String MARVEL_RESULT_LIMIT_NUM = "100";
     final static String MARVEL_PARAM_TIME_STAMP = "ts";
     final static String MARVEL_RESULT_TS_NUM = "1";
     final static String MARVEL_PARAM_API = "apikey";
-    final static String MARVEL_PARAM_API_KEY = "";
+    final static String MARVEL_PARAM_API_KEY = ""; // Public Key
     final static String MARVEL_PARAM_HASH = "hash";
-    final static String MARVEL_PARAM_HASH_KEY = "";
+    final static String MARVEL_PARAM_HASH_KEY = ""; // Digest
+
 
     public static URL marvelBuildURL(String marvelSearchQuery) {
 
@@ -41,6 +47,7 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        Log.v(TAG, "Built URI " + url);
         return url;
     }
 

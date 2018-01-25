@@ -17,6 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.android.marvelcatalog.utilities.NetworkUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private EditText mSearchEditText;
     private ProgressBar mLoadingIndicator;
-    private View emptyView;
+    private View mEmptyView;
     public String jsonString;
     public URL marvelQueryUrl;
     private ListView listView;
@@ -44,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         mSearchEditText = (EditText) findViewById(R.id.editText_query);
         comicList = new ArrayList<>();
         listView = (ListView) findViewById(R.id.list);
-        emptyView = findViewById(R.id.empty_view);
-        listView.setEmptyView(emptyView);
+        mEmptyView = findViewById(R.id.empty_view);
+        listView.setEmptyView(mEmptyView);
     }
 
     @Override
@@ -127,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.v(TAG, "listview is: " + listView);
                 listView.setAdapter(adapter);
             } else {
-                listView.setEmptyView(emptyView);
+                listView.setEmptyView(mEmptyView);
             }
         }
     }
